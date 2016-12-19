@@ -1,5 +1,5 @@
 require "amp_helper/version"
 
 module AmpHelper
-  # Your code goes here...
+  require 'amp_helper/railtie' if defined?(Rails)
 end

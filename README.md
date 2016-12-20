@@ -22,13 +22,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+### Helpers
+
+#### amp_image_tag(source, options)
+
+##### Url with image's dimensions
+
+    % amp_image_tag('http://sample.com/image.jpg', width: '40', height: '40')
+    #=> '<amp-img alt="Image" height="40" src="http://sample.com/image.jpg" width="40" /></amp-img>'
+
+##### Url without image's dimensions
+
+It's going to access file dimensions.
+
+    % amp_image_tag('http://sample.com/image.jpg')
+    #=> '<amp-img alt="Image" height="400" src="http://sample.com/image.jpg" width="400" /></amp-img>'
+
+##### Carrierwave
+
+    % amp_image_tag(Article.find(1).thumb.icon.url, width: '30', height: '30')
+    # => '<amp-img alt="Icon placeholder" height="30" src="https:g/s3-ap-northeast-1.amazonaws.com/foo/assets/placeholders/icon_placeholder.png" width="30" /></amp-img>'
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    bundle exec rspec
 
 ## Contributing
 

@@ -1,3 +1,4 @@
+require 'carrierwave'
 require 'fastimage'
 require 'amp_helper/amp_image_tag_helper'
 

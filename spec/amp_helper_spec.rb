@@ -18,11 +18,18 @@ describe AmpHelper do
                  '350x150" width="%d" /></amp-img>'
     end
 
-    it 'url with dimensions returns amp-img tag' do
+    it 'url with width and height returns amp-img tag' do
       @view.amp_image_tag(@image_url, width: 20, height: 20).should(
         eq(@img_tag % [20, 20].reverse)
       )
     end
+
+    it 'url with size returns amp-img tag' do
+      @view.amp_image_tag(@image_url, size: '20x20').should(
+        eq(@img_tag % [20, 20].reverse)
+      )
+    end
+
     it 'url without dimensions returns amp-img tag' do
       @view.amp_image_tag(@image_url).should(
         eq(@img_tag % [350, 150].reverse)

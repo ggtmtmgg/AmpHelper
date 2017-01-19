@@ -25,8 +25,8 @@ describe AmpHelper do
                       'd" /></amp-img>'
       @uploader_retina_tag = '<amp-img alt="Square 350x150" height="%d" src="h'\
                              'ttp://placehold.it/square_350x150" srcset="http:'\
-                             '//placehold.it/square_2x_350x150" width="%d" /><'\
-                             '/amp-img>'
+                             '//placehold.it/square_2x_350x150 2x" width="%d" '\
+                             '/></amp-img>'
     end
 
     it 'passed url with width and height returns amp-img tag' do

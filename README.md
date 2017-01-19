@@ -44,11 +44,11 @@ Or install it yourself as:
 
 ##### Retina
 
-      $ amp_image_tag('http://placehold.it/350x150', srcset: 'http://placehold.it/700x300', size: '20x20')
-      #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" srcset="http://placehold.it/700x300" width="20" /></amp-img>'
+      $ amp_image_tag('http://placehold.it/350x150', srcset: 'http://placehold.it/700x300 2x', size: '20x20')
+      #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" srcset="http://placehold.it/700x300 2x" width="20" /></amp-img>'
 
       $ amp_image_tag(ThumbUploader.new.square, format_2x: '%s_2x')
-      #=> '<amp-img alt="Square 350x150" height="20" src="http://placehold.it/square_350x150" srcset="http://placehold.it/square_2x_350x150" width="20" /></amp-img>'
+      #=> '<amp-img alt="Square 350x150" height="20" src="http://placehold.it/square_350x150" srcset="http://placehold.it/square_2x_350x150 2x" width="20" /></amp-img>'
 
 ##### ThumbUploader Sample
 

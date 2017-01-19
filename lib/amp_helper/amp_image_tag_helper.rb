@@ -26,7 +26,7 @@ module AmpImageTagHelper
        !source.class.processors.empty? &&
        format_2x = opts.delete(:format_2x)
       name_2x = format_2x % source.version_name
-      opts[:srcset] = source.parent_version.send(name_2x).url
+      opts[:srcset] = "#{source.parent_version.send(name_2x).url} 2x"
     end
   end
 end

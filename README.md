@@ -1,8 +1,7 @@
 # AmpHelper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/amp_helper`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+AmpHelper helps you generate html tags for AMP.
+To know AmpHelper ability, just look Usage section.
 
 ## Installation
 
@@ -25,24 +24,46 @@ Or install it yourself as:
 
 ### Helpers
 
-#### amp_image_tag(source, options)
+#### amp_image_tag(source, options = {})
 
-##### Url with image's dimensions
+##### String Source
 
-    % amp_image_tag('http://sample.com/image.jpg', width: '40', height: '40')
-    #=> '<amp-img alt="Image" height="40" src="http://sample.com/image.jpg" width="40" /></amp-img>'
+      $ amp_image_tag('http://placehold.it/350x150', width: 20, height: 20)
+      #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" width="20" /></amp-img>'
 
-##### Url without image's dimensions
+      $ amp_image_tag('http://placehold.it/350x150', size: '20x20')
+      #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" width="20" /></amp-img>'
 
-It's going to access file dimensions.
+      $ amp_image_tag('http://placehold.it/350x150')
+      #=> '<amp-img alt="350x150" height="150" src="http://placehold.it/350x150" width="350" /></amp-img>'
 
-    % amp_image_tag('http://sample.com/image.jpg')
-    #=> '<amp-img alt="Image" height="400" src="http://sample.com/image.jpg" width="400" /></amp-img>'
+##### Carrierwave Source
 
-##### Carrierwave
+      $ amp_image_tag(ThumbUploader.new.square)
+      #=> '<amp-img alt="Square 350x150" height="20" src="http://placehold.it/square_350x150" width="20" /></amp-img>'
 
-    % amp_image_tag(Article.find(1).thumb.icon.url, width: '30', height: '30')
-    # => '<amp-img alt="Icon placeholder" height="30" src="https:g/s3-ap-northeast-1.amazonaws.com/foo/assets/placeholders/icon_placeholder.png" width="30" /></amp-img>'
+##### Retina
+
+      $ amp_image_tag('http://placehold.it/350x150', srcset: 'http://placehold.it/700x300', size: '20x20')
+      #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" srcset="http://placehold.it/700x300" width="20" /></amp-img>'
+
+      $ amp_image_tag(ThumbUploader.new.square, format_2x: '%s_2x')
+      #=> '<amp-img alt="Square 350x150" height="20" src="http://placehold.it/square_350x150" srcset="http://placehold.it/square_2x_350x150" width="20" /></amp-img>'
+
+##### ThumbUploader Sample
+
+    class ThumbUploader < CarrierWave::Uploader::Base
+      storage :file
+      version :square do
+        process resize_to_fill: [20, 20]
+      end
+      version :square_2x do
+        process resize_to_fill: [40, 40]
+      end
+      def default_url(*args)
+        'http://placehold.it/' + [version_name, '350x150'].compact.join('_')
+      end
+    end
 
 ## Development
 

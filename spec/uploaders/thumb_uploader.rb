@@ -4,7 +4,10 @@ class ThumbUploader < CarrierWave::Uploader::Base
   version :square do
     process resize_to_fill: [20, 20]
   end
+  version :square_2x do
+    process resize_to_fill: [40, 40]
+  end
   def default_url(*args)
-    'http://placehold.it/350x150'
+    'http://placehold.it/' + [version_name, '350x150'].compact.join('_')
   end
 end

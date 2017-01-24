@@ -64,5 +64,19 @@ describe AmpHelper do
         eq(@uploader_retina_tag % [20, 20].reverse)
       )
     end
+
+    describe 'setted config.format_2x' do
+      before :all do
+        AmpHelper.configure do |config|
+          config.format_2x = '%s_2x'
+        end
+      end
+
+      it 'passed uploader with version returns amp-img tag' do
+        @view.amp_image_tag(@uploader.square).should(
+          eq(@uploader_retina_tag % [20, 20].reverse)
+        )
+      end
+    end
   end
 end

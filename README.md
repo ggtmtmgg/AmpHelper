@@ -14,19 +14,13 @@ gem 'amp_helper'
 And then execute:
 
     $ bundle
+    $ rails g amp_helper
 
-Or install it yourself as:
+## Helpers usage
 
-    $ gem install amp_helper
+### amp_image_tag(source, options = {})
 
-## Usage
-
-
-### Helpers
-
-#### amp_image_tag(source, options = {})
-
-##### String Source
+#### String Source
 
       $ amp_image_tag('http://placehold.it/350x150', width: 20, height: 20)
       #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" width="20" /></amp-img>'
@@ -37,12 +31,12 @@ Or install it yourself as:
       $ amp_image_tag('http://placehold.it/350x150')
       #=> '<amp-img alt="350x150" height="150" src="http://placehold.it/350x150" width="350" /></amp-img>'
 
-##### Carrierwave Source
+#### Carrierwave Source
 
       $ amp_image_tag(ThumbUploader.new.square)
       #=> '<amp-img alt="Square 350x150" height="20" src="http://placehold.it/square_350x150" width="20" /></amp-img>'
 
-##### Retina
+#### Retina
 
       $ amp_image_tag('http://placehold.it/350x150', srcset: 'http://placehold.it/700x300 2x', size: '20x20')
       #=> '<amp-img alt="350x150" height="20" src="http://placehold.it/350x150" srcset="http://placehold.it/700x300 2x" width="20" /></amp-img>'
@@ -50,7 +44,8 @@ Or install it yourself as:
       $ amp_image_tag(ThumbUploader.new.square, format_2x: '%s_2x')
       #=> '<amp-img alt="Square 350x150" height="20" src="http://placehold.it/square_350x150" srcset="http://placehold.it/square_2x_350x150 2x" width="20" /></amp-img>'
 
-##### ThumbUploader Sample
+
+##### Example of CarrierWave::Uploader versions.
 
     class ThumbUploader < CarrierWave::Uploader::Base
       storage :file
@@ -63,6 +58,17 @@ Or install it yourself as:
       def default_url(*args)
         'http://placehold.it/' + [version_name, '350x150'].compact.join('_')
       end
+    end
+
+## Configure
+
+### Configure ratina version name format For CarrierWave::Uploader
+
+config/initializers/amp_helper.rb
+
+    AmpHelper.configure do |config|
+      # Configure ratina version name format For CarrierWave::Uploader
+      # config.format_2x = '%s_2x'
     end
 
 ## Development

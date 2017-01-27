@@ -1,17 +1,9 @@
 require 'spec_helper'
-require 'amp_helper/amp_image_tag_helper'
-require 'carrierwave'
-require 'fastimage'
-
-require_relative 'uploaders/thumb_uploader'
-
-ActionView::Base.send(:include, AmpImageTagHelper)
 
 describe AmpHelper do
   it 'has a version number' do
     expect(AmpHelper::VERSION).not_to be nil
   end
-
 
   describe 'amp_image_tag' do
     before :all do

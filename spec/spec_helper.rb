@@ -6,6 +6,7 @@ require 'carrierwave'
 require 'fastimage'
 
 require_relative 'uploaders/thumb_uploader'
+require_relative 'requests/request'
 
 ActionView::Base.send(:include, AmpImageTagHelper)
 ActionView::Base.send(:include, AmpLinkToHelper)
@@ -13,4 +14,8 @@ ActionView::Base.send(:include, AmpLinkToHelper)
 AmpHelper.configure do |config|
   # Configure ratina version name format For CarrierWave::Uploader
   # config.format_2x = '%s_2x'
+
+  # Enable amp cache link.
+  # Recommend turning it on only while production mode.
+  config.amp_link = true
 end

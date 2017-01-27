@@ -1,7 +1,12 @@
 module AmpLinkToHelper
   def amp_link_to(name = nil, options = nil, html_options = nil, &block)
-    html_options = html_options.to_h
-    block_given? ? set_amp_vars(name, html_options) : set_amp_vars(options, html_options)
+    if block_given?
+      options = options.to_h
+      set_amp_vars(name, options)
+    else
+      html_options = html_options.to_h
+      set_amp_vars(options, html_options)
+    end
 
     amp_link = AmpHelper.configuration.amp_link
     return link_to(name, options, html_options, &block) unless amp_link

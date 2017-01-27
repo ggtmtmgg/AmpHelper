@@ -9,10 +9,11 @@ module AmpHelper
   end
 
   class Configuration
-    attr_accessor :format_2x
+    attr_accessor :format_2x, :amp_link
 
     def initialize
       @format_2x = nil
+      @amp_link = true
     end
   end
 end

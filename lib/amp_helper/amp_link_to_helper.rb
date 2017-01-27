@@ -1,5 +1,7 @@
 module AmpLinkToHelper
   def amp_link_to(name = nil, options = nil, html_options = nil, &block)
+    block_given? ? set_amp_vars(name, html_options) : set_amp_vars(options, html_options)
+
     amp_link = AmpHelper.configuration.amp_link
     return link_to(name, options, html_options, &block) unless amp_link
     return link_to(cdn_url(name), options, html_options, &block) if block_given?
@@ -8,6 +10,13 @@ module AmpLinkToHelper
 
   private
 
+  # Pass url to amp-analytics as 'linkUrl' variable.
+  def set_amp_vars(options, html_options = nil)
+    html_options = html_options.to_h
+    html_options['data-vars-link-url'] = url_for(options)
+  end
+
+  # If AMP cache exists, return cdn url.
   def cdn_url(options)
     url = URI(url_for(options))
     identify = ''

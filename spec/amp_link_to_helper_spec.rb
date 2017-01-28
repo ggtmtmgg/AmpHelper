@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe AmpHelper do
-  it 'has a version number' do
-    expect(AmpHelper::VERSION).not_to be nil
+  def a_tag(origin_url, link_url, title)
+    "<a data-vars-link-url=\"#{origin_url}\" href=\"#{link_url}\">#{title}</a>"
   end
 
   describe 'amp_link_to' do
@@ -21,15 +21,15 @@ describe AmpHelper do
         url = 'https://ampbyexample.com/components/amp-form/preview/'
         cache_url = 'https://ampbyexample-com.cdn.ampproject.org/c/s/ampbyexample.com/components/amp-form/preview/'
         @view.amp_link_to(title, url).should(
-          eq("<a data-vars-link-url=\"#{url}\" href=\"#{cache_url}\">#{title}</a>")
+          eq(a_tag(url, cache_url, title))
         )
       end
 
-      it 'passed no amp page returns an original link' do
+      it 'passed a page url don\'t have AMP returns an original link' do
         title = 'link title'
         url = 'https://ampbyexample.com/components/amp-form/preview/noamp'
         @view.amp_link_to(title, url).should(
-          eq("<a data-vars-link-url=\"#{url}\" href=\"#{url}\">#{title}</a>")
+          eq(a_tag(url, url, title))
         )
       end
 
@@ -40,7 +40,7 @@ describe AmpHelper do
           cache_url = 'https://ampbyexample-com.cdn.ampproject.org/c/s/ampbyexample.com/components/amp-form/preview/'
           a_tag = @view.amp_link_to(url) { title }
           a_tag.should(
-            eq("<a data-vars-link-url=\"#{url}\" href=\"#{cache_url}\">#{title}</a>")
+            eq(a_tag(url, cache_url, title))
           )
         end
       end
@@ -55,7 +55,7 @@ describe AmpHelper do
         title = 'link title'
         url = 'https://ampbyexample.com/components/amp-form/preview'
         @view.amp_link_to(title, url).should(
-          eq("<a data-vars-link-url=\"#{url}\" href=\"#{url}\">#{title}</a>")
+          eq(a_tag(url, url, title))
         )
       end
     end

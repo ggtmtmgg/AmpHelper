@@ -6,11 +6,12 @@ module AmpHelper
         <<-FILE.strip_heredoc
           AmpHelper.configure do |config|
             # Configure ratina version name format For CarrierWave::Uploader
+            # Default: nil
             # config.format_2x = '%s_2x'
 
             # Enable amp cache link.
-            # Recommend turning it on only while production mode.
-            config.amp_link = Rails.env.production?
+            # Default: true
+            # config.enable_amp_link = Rails.env.production?
           end
         FILE
       end

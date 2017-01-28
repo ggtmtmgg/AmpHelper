@@ -1,11 +1,18 @@
 module AmpLinkToHelper
+  def self.included(base)
+    base.module_eval do
+      alias_method :original_link_to, :link_to
+      alias_method :link_to, :amp_link_to
+    end
+  end
+
   def amp_link_to(name = nil, options = nil, html_options = nil, &block)
     html_options, options, name = options, name, block if block_given?
     html_options ||= {}
     set_amp_vars(options, html_options)
-    options = cdn_url(options) if AmpHelper.configuration.amp_link
+    options = cdn_url(options) if html_options.delete(:amp) && AmpHelper.configuration.enable_amp_link
     options, name, block = html_options, options, name if block_given?
-    link_to(name, options, html_options, &block)
+    original_link_to(name, options, html_options, &block)
   end
 
   private

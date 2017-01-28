@@ -3,12 +3,12 @@ module AmpImageTagHelper
     has_dimensions = (opts[:width] && opts[:height]) || opts[:size]
     set_dimensions(source, opts) if !has_dimensions
     set_scrset(source, opts)
-    image_tag_to_amp(image_tag(source, opts))
+    img_to_amp_img(original_image_tag(source, opts))
   end
 
   private
 
-  def image_tag_to_amp(img_tag)
+  def img_to_amp_img(img_tag)
     img_tag.gsub(/^<img/, '<amp-img').gsub(/>$/, '></amp-img>').html_safe
   end
 

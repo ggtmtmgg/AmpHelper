@@ -13,8 +13,7 @@ module AmpImageTagHelper
   end
 
   def set_dimensions(source, opts)
-    if source.kind_of?(CarrierWave::Uploader::Base) &&
-       !source.class.processors.empty?
+    if source.kind_of?(CarrierWave::Uploader::Base) && !source.class.processors.empty?
       opts[:width], opts[:height] = source.class.processors[0][1]
     else
       opts[:width], opts[:height] = FastImage.size(source.to_s)

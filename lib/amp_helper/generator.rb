@@ -8,7 +8,7 @@ module AmpHelper
             # Enable amp image.
             # Default: true
             # config.enable_amp_image = true
-#
+
             # Configure ratina version name format For CarrierWave::Uploader
             # Default: nil
             # config.format_2x = '%s_2x'

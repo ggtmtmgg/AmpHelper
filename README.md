@@ -8,7 +8,7 @@ To know AmpHelper ability, just look Usage section.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'amp_helper'
+gem 'amp_helper', '~> 1.0.0.pre'
 ```
 
 And then execute:

@@ -1,14 +1,22 @@
 module AmpImageTagHelper
+  def self.included(base)
+    base.module_eval do
+      alias_method :original_image_tag, :image_tag
+      alias_method :image_tag, :amp_image_tag
+    end
+  end
+
   def amp_image_tag(source, opts = {})
+    return original_image_tag(source, opts) unless opts.delete(:amp) && AmpHelper.configuration.enable_amp_image
     has_dimensions = (opts[:width] && opts[:height]) || opts[:size]
-    set_dimensions(source, opts) if !has_dimensions
+    set_dimensions(source, opts) unless has_dimensions
     set_scrset(source, opts)
-    image_tag_to_amp(image_tag(source, opts))
+    img_to_amp_img(original_image_tag(source, opts))
   end
 
   private
 
-  def image_tag_to_amp(img_tag)
+  def img_to_amp_img(img_tag)
     img_tag.gsub(/^<img/, '<amp-img').gsub(/>$/, '></amp-img>').html_safe
   end
 

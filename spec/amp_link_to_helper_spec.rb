@@ -12,13 +12,15 @@ describe AmpHelper do
 
       @title = 'link title'
       @url = 'https://ampbyexample.com/components/amp-form/preview/'
-      @noamp_url = 'https://ampbyexample.com/components/amp-form/preview/noamp'
       @cache_url = 'https://ampbyexample-com.cdn.ampproject.org/c/s/ampbyexample.com/components/amp-form/preview/'
+      @noamp_url = 'https://ampbyexample.com/error'
+      @noamp_cache_url = 'https://ampbyexample-com.cdn.ampproject.org/c/s/ampbyexample.com/error'
     end
 
-    describe 'with configuration.enable_amp_link = true' do
+    describe 'with default configuration' do
       before :all do
         AmpHelper.configuration.enable_amp_link = true
+        AmpHelper.configuration.confirm_cache_exist = false
       end
 
       it 'returns a cache link' do
@@ -27,9 +29,9 @@ describe AmpHelper do
         )
       end
 
-      it 'passed a page url don\'t have AMP returns an original link' do
+      it 'passed a page url don\'t have AMP returns a cache link' do
         @view.link_to(@title, @noamp_url, amp: true).should(
-          eq(a_tag(@noamp_url, @noamp_url, @title))
+          eq(a_tag(@noamp_url, @noamp_cache_url, @title))
         )
       end
 
@@ -52,6 +54,7 @@ describe AmpHelper do
     describe 'with configuration.enable_amp_link = false' do
       before :all do
         AmpHelper.configuration.enable_amp_link = false
+        AmpHelper.configuration.confirm_cache_exist = false
       end
 
       it 'returns an original link' do
@@ -63,6 +66,25 @@ describe AmpHelper do
       it 'passed { amp: true } returns an original link' do
         @view.link_to(@title, @url, amp: true).should(
           eq(a_tag(@url, @url, @title))
+        )
+      end
+    end
+
+    describe 'with configuration.confirm_cache_exist = true' do
+      before :all do
+        AmpHelper.configuration.enable_amp_link = true
+        AmpHelper.configuration.confirm_cache_exist = true
+      end
+
+      it 'returns a cache link' do
+        @view.link_to(@title, @url, amp: true).should(
+          eq(a_tag(@url, @cache_url, @title))
+        )
+      end
+
+      it 'passed a page url don\'t have AMP returns an original link' do
+        @view.link_to(@title, @noamp_url, amp: true).should(
+          eq(a_tag(@noamp_url, @noamp_url, @title))
         )
       end
     end

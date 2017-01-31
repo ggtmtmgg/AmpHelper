@@ -30,10 +30,11 @@ module AmpLinkToHelper
     identify += "#{request.host}#{uri.path}#{uri.query}"
     escaped_host = request.host.gsub('-', '--').gsub('.', '-')
     cache_url = "https://#{escaped_host}.cdn.ampproject.org/c/#{identify}"
-    response_200?(cache_url) ? cache_url : uri.to_s
+    validate_amp_cache(cache_url) ? cache_url : uri.to_s
   end
 
-  def response_200?(url)
+  def validate_amp_cache(url)
+    return true unless AmpHelper.configuration.confirm_cache_exist
     Net::HTTP.get_response(URI(url)).code == '200'
   end
 end

@@ -27,7 +27,8 @@ module AmpLinkToHelper
     uri = URI(url_for(options))
     identify = ''
     identify += 's/' if request.scheme == 'https'
-    identify += "#{request.host}#{uri.path}#{uri.query}"
+    identify += "#{request.host}#{uri.path}"
+    identify += "?#{uri.query}" if uri.query.present?
     escaped_host = request.host.gsub('-', '--').gsub('.', '-')
     cache_url = "https://#{escaped_host}.cdn.ampproject.org/c/#{identify}"
     validate_amp_cache(cache_url) ? cache_url : uri.to_s
